@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="front/favicon.ico" type="image/ico" />
+    <link rel="stylesheet" href="cdn/bootstrap.min.css">
+    <link rel="stylesheet" href="front/index.css">
+    <title>Busca palabras</title>
+</head>
+
+<body>
+    <div class="container-fluid p-0">
+        <!-- Cabecera -->
+        <nav class="navbar px-2 bg-info">
+            <span class="navbar-brand">Buscador de palabras para Wordzee!
+                <a class="fs-6" data-bs-toggle="modal" href="#id_ventana_version">0.4</a>
+            </span>
+            <div class="form-check form-switch form-check-inline">
+                <!-- TODO hacer se que almacene en local -->
+                <input class="form-check-input" type="checkbox" role="switch" id="idActivarHerramientas">
+                <label class="form-check-label" for="idActivarHerramientas">Herramientas</label>
+            </div>
+            <span class="navbar-text">
+                <a class="me-1" href="https://www.facebook.com/groups/338600778038469" target="_blank">
+                    <img src="cdn/Facebook_f_logo_2019.svg" height="20" alt="Facebook"></a>
+                <a href="https://t.me/wordzee" target="_blank">
+                    <img src="cdn/Telegram_2019_Logo.svg.png" height="20" alt="Telegram"></a>
+            </span>
+        </nav>
+        <div class="row m-0">
+            <!-- Puntos extra -->
+            <div id="idPuntosExtra" class="col px-3 py-2">
+                <form id="principal">
+                    <h4 id="id_puntos_extra">Puntos extra</h4>
+                    <div class="p-0 mb-1">
+                        <input name="pal1let1" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal1let2" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal1let3" class="btn btn-secondary info" type="text" readonly>
+                    </div>
+                    <div class="p-0 mb-1">
+                        <input name="pal2let1" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal2let2" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal2let3" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal2let4" class="btn btn-secondary info" type="text" readonly>
+                    </div>
+                    <div class="p-0 mb-1">
+                        <input name="pal3let1" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal3let2" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal3let3" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal3let4" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal3let5" class="btn btn-secondary info" type="text" readonly>
+                    </div>
+                    <div class="p-0 mb-1">
+                        <input name="pal4let1" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal4let2" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal4let3" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal4let4" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal4let5" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal4let6" class="btn btn-secondary bg-primary" value="DP" type="text" readonly>
+                    </div>
+                    <div class="p-0 mb-1">
+                        <input name="pal5let1" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal5let2" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal5let3" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal5let4" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal5let5" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal5let6" class="btn btn-secondary info" type="text" readonly>
+                        <input name="pal5let7" class="btn btn-secondary bg-warning" value="TP" type="text" readonly>
+                    </div>
+                    <h4 class="mt-3">Letras disponibles</h4>
+                    <div class="input-group input-group-sm mb-3" id="letras">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                        <input name="letrasDisponibles[]" type="text" size="1" maxlength="1" autocomplete="off" required="required" class="form-control text-uppercase">
+                    </div>
+                    <h4 id="id_ronda">Ronda</h4>
+                    <div class="form-check form-check-inline mb-3">
+                        <label class="form-check-label">1</label>
+                        <input name="ronda" type="radio" class="form-check-input" value="1">
+                    </div>
+                    <div class="form-check form-check-inline mb-3">
+                        <label class="form-check-label">2</label>
+                        <input name="ronda" type="radio" class="form-check-input" value="2">
+                    </div>
+                    <div class="form-check form-check-inline mb-3">
+                        <label class="form-check-label">3</label>
+                        <input name="ronda" type="radio" class="form-check-input" value="3">
+                    </div>
+                    <div class="form-check form-check-inline mb-3">
+                        <label class="form-check-label">4</label>
+                        <input name="ronda" type="radio" class="form-check-input" value="4">
+                    </div>
+                    <div class="form-check form-check-inline mb-3">
+                        <label class="form-check-label">5</label>
+                        <input name="ronda" type="radio" class="form-check-input" value="5">
+                    </div>
+                    <div class="btn-toolbar justify-content-between mt-1">
+                        <button type="button" onclick="formularioEnviar()" class="btn btn-primary">Buscar</button>
+                        <button type="button" onclick="restablecer()" class="btn btn-danger">Restablecer</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Herramientas -->
+            <div id="idHerramientas" class="herramientas col px-3 py-2">
+                <h4>Herramientas</h4>
+                <form class="row">
+                    <div class="col">Nueva palabra:</div>
+                    <div class="col">
+                        <input name="palabraGuardar" id="palabraGuardar" type="text" minlength="3" maxlength="7" autocomplete="off" required="required" class="form-control text-uppercase" value="">
+                    </div>
+                    <div class="col">
+                        <button id="idGuardar" type="button" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+                <form class="row mt-3">
+                    <div class="col">Borrar palabra:</div>
+                    <div class="col">
+                        <input name="palabraBorrar" id="palabraBorrar" type="text" minlength="3" maxlength="7" autocomplete="off" required="required" class="form-control text-uppercase" value="">
+                    </div>
+                    <div class="col">
+                        <button id="idBorrar" type="button" class="btn btn-danger">Borrar</button>
+                    </div>
+                </form>
+                <form class="row mt-3">
+                    <div class="col">Sincronizar palabras:</div>
+                    <div class="col input-group-append">
+                        <button id="idSincronizar" type="button" class="btn btn-warning">Sincronizar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col px-3 py-2">
+                <!-- Palabras sugeridas -->
+                <h4 class="palenc" data-bs-toggle="collapse" data-bs-target="#id_palabrasSugeridas" aria-expanded="true" aria-controls="id_palabrasSugeridas">Palabras de mayor valor</h4>
+                <div class="collapse show" id="id_palabrasSugeridas">
+                    <table class="table table-sm table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>3 letras</th>
+                                <th>4 letras</th>
+                                <th>5 letras</th>
+                                <th>6 letras</th>
+                                <th>7 letras</th>
+                            </tr>
+                        </thead>
+                        <tbody id="idPalabrasGanadoras"></tbody>
+                    </table>
+                </div>
+                <!-- Palabras encontradas -->
+                <h4>Palabras encontradas</h4>
+                <table class="table table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>3 letras</th>
+                            <th>4 letras</th>
+                            <th>5 letras</th>
+                            <th>6 letras</th>
+                            <th>7 letras</th>
+                        </tr>
+                    </thead>
+                    <tbody id="idPalabrasEncontradas"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="id_ventana_version" tabindex="-1" aria-labelledby="id_ventana_version_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="id_ventana_version_label">Instrucciones y novedades</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Instrucciones</h6>
+                    <p class="m-0">1. Pulsa en los cuadros de "Puntos extra" para indicar las casillas con DL y TP.</p>
+                    <p class="m-0">2. Introduce las "Letras disponibles" que te da Wordzee.</p>
+                    <p class="m-0">3. Indica la "Ronda" en la que estás para obtener los puntos correctos.</p>
+                    <p class="m-0">4. Pulsa en Buscar y elige la palabra que más te convenga.</p>
+                    <p class="m-0">Se pueden ocultar las Palabras de mayor valor pulsando en el título.</p>
+                    <p class="m-0">Al pulsar en una de las Palabras encontradas, esta se venvía a Letras disponibles.</p>
+                    <hr>
+                    <h6>Novedades</h6>
+                    <p class="m-0">Ahora se sugieren las "Palabras de mayor valor".</p>
+                    <p class="m-0">Optimización de código.</p>
+                    <p class="m-0">Retoques de diseño</p>
+                    <p class="m-0">Más palabras incluidas y eliminadas del diccionario.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalAlert" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Importación finalizada.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu">
+        <div>
+            <i class="bi bi-eraser-fill"></i> Borrar <span id="idBorrarPalabra"></span> de la Base de Datos
+        </div>
+    </div>
+    <div id="cargando" class="d-none position-fixed top-50 start-50 translate-middle">
+        <img src="front/cargando.gif" alt="cargando">
+    </div>
+    <script src="cdn/bootstrap.bundle.min.js"></script>
+    <script src="front/index.js"></script>
+</body>
+
+</html>

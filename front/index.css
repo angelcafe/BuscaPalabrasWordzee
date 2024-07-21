@@ -1,0 +1,82 @@
+#idPuntosExtra .btn-secondary {
+    width: 13%;
+}
+
+.info {
+    background-color: #0dcaf0;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.palenc {
+    cursor: pointer;
+}
+
+.rosa {
+    background-color: pink;
+}
+
+#idPuntosExtra {
+    max-width: 24em;
+    min-width: 24em;
+}
+
+.herramientas {
+    min-width: 25.3em;
+}
+
+#idBorrarPalabra,
+#idBotonBuscaPalabras {
+    cursor: pointer;
+}
+
+#menu {
+    background: #fff;
+    border: 1px solid #C6C6C6;
+    box-shadow: 2px 2px 2px 0 rgba(143, 144, 145, 1);
+    -moz-box-shadow: 2px 2px 2px 0 rgba(143, 144, 145, 1);
+    -webkit-box-shadow: 2px 2px 2px 0 rgba(143, 144, 145, 1);
+    color: #555;
+    display: none;
+    font-family: sans-serif;
+    font-size: 15px;
+    padding: 0;
+    position: absolute;
+    transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -webkit-transition: opacity .5s ease-in-out;
+}
+
+#menu div {
+    color: #555;
+    display: block;
+    padding: 6px 8px 6px 8px;
+    position: relative;
+    text-decoration: none;
+    width: 294px;
+}
+
+#menu div img,
+#menu div i.fa {
+    font-size: 17px;
+    height: 20px;
+    left: 5px;
+    position: absolute;
+    top: 2px;
+    width: 20px;
+}
+
+#menu span:hover {
+    background: #69a0f1;
+    color: #fff;
+}
+
+#menu span {
+    font-weight: bold;
+}
