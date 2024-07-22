@@ -101,7 +101,7 @@
                         <input name="ronda" type="radio" class="form-check-input" value="5">
                     </div>
                     <div class="btn-toolbar justify-content-between mt-1">
-                        <button type="button" onclick="formularioEnviar()" class="btn btn-primary">Buscar</button>
+                        <button type="button" onclick="buscar()" class="btn btn-primary">Buscar</button>
                         <button type="button" onclick="restablecer()" class="btn btn-danger">Restablecer</button>
                     </div>
                 </form>
@@ -109,30 +109,31 @@
             <!-- Herramientas -->
             <div id="idHerramientas" class="herramientas col px-3 py-2">
                 <h4>Herramientas</h4>
-                <form class="row">
-                    <div class="col">Nueva palabra:</div>
-                    <div class="col">
-                        <input name="palabraGuardar" id="palabraGuardar" type="text" minlength="3" maxlength="7" autocomplete="off" required="required" class="form-control text-uppercase" value="">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Solicitar cambios</h5>
+                        <p>Con esta herramienta, puede solicitar añadir o borrar palabras de la base de datos.</p>
+                        <p>Solamente tendrá que rellenar la palabra que quiera agregar o eliminar y después de revisarla se aplicará si es el caso.</p>
+                        <form class="row">
+                            <div class="col">Nueva palabra:</div>
+                            <div class="col">
+                                <input name="palabraGuardar" id="palabraGuardar" type="text" minlength="3" maxlength="7" autocomplete="off" required="required" class="form-control text-uppercase">
+                            </div>
+                            <div class="col">
+                                <button id="idGuardar" type="button" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        <form class="row mt-3">
+                            <div class="col">Borrar palabra:</div>
+                            <div class="col">
+                                <input name="palabraBorrar" id="palabraBorrar" type="text" minlength="3" maxlength="7" autocomplete="off" required="required" class="form-control text-uppercase">
+                            </div>
+                            <div class="col">
+                                <button id="idBorrar" type="button" class="btn btn-danger">Borrar</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col">
-                        <button id="idGuardar" type="button" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-                <form class="row mt-3">
-                    <div class="col">Borrar palabra:</div>
-                    <div class="col">
-                        <input name="palabraBorrar" id="palabraBorrar" type="text" minlength="3" maxlength="7" autocomplete="off" required="required" class="form-control text-uppercase" value="">
-                    </div>
-                    <div class="col">
-                        <button id="idBorrar" type="button" class="btn btn-danger">Borrar</button>
-                    </div>
-                </form>
-                <form class="row mt-3">
-                    <div class="col">Sincronizar palabras:</div>
-                    <div class="col input-group-append">
-                        <button id="idSincronizar" type="button" class="btn btn-warning">Sincronizar</button>
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="col px-3 py-2">
                 <!-- Palabras sugeridas -->

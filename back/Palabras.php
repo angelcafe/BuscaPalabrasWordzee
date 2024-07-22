@@ -2,7 +2,8 @@
 
 class Palabras
 {
-    private PDO $pdo_sqlite;
+    private PDO $bd_palabras;
+    private PDO $bd_sugerencias;
     private array $letras = [];
     private array $palabras = [];
     private array $resultado = [];
@@ -10,9 +11,11 @@ class Palabras
     public function __construct(array $letras)
     {
         $this->inicializarBD();
-        $this->letras = $letras;
-        $this->obtenerPalabras();
-        unset($this->pdo_sqlite);
+        if (!empty($letras)) {
+            $this->letras = $letras;
+            $this->obtenerPalabras();
+            unset($this->bd_palabras);
+        }
     }
 
     public function getPalabras(): array
@@ -25,20 +28,31 @@ class Palabras
         return $this->resultado;
     }
 
+    public function setBorrar(string $palabra): void
+    {
+        $query = $this->bd_sugerencias->prepare('INSERT INTO borrar (palabra) VALUES (:palabra)');
+        $query->execute([':palabra' => $palabra]);
+    }
+
+    public function setNueva(string $palabra): void
+    {
+        $query = $this->bd_sugerencias->prepare('INSERT INTO nuevas (palabra) VALUES (:palabra)');
+        $query->execute([':palabra' => $palabra]);
+    }
+
     private function inicializarBD(): void
     {
         $bd = __DIR__ . DIRECTORY_SEPARATOR . 'palabras.sqlite';
-        $this->pdo_sqlite = new PDO('sqlite:' . $bd);
-        $this->pdo_sqlite->sqliteCreateFunction('regexp_like', 'preg_match', 2);
+        $this->bd_palabras = new PDO('sqlite:' . $bd);
+        $this->bd_palabras->sqliteCreateFunction('regexp_like', 'preg_match', 2);
 
-        if (!file_exists($bd)) {
-            $this->pdo_sqlite->exec('CREATE TABLE IF NOT EXISTS "palabras" ("palabra" STRING PRIMARY KEY)');
-        }
+        $bd = __DIR__ . DIRECTORY_SEPARATOR . 'sugerencias.sqlite';
+        $this->bd_sugerencias = new PDO('sqlite:' . $bd);
     }
 
     private function obtenerPalabras(): void
     {
-        $query = $this->pdo_sqlite->query('SELECT palabra FROM palabras ORDER BY palabra ASC');
+        $query = $this->bd_palabras->query('SELECT palabra FROM palabras ORDER BY palabra ASC');
 
         while ($palabra = $query->fetch(PDO::FETCH_COLUMN, 0)) {
             $this->palabras[] = $palabra;

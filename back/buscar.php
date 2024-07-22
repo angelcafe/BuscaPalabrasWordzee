@@ -36,6 +36,12 @@ if (!empty($_POST['ronda'])) {
 
         echo json_encode($palabras_puntos);
     }
+} elseif (!empty($_POST['borrar'])) {
+    $busca_palabras = new Palabras([]);
+    $busca_palabras->setBorrar($_POST['borrar']);
+} elseif (!empty($_POST['nueva'])) {
+    $busca_palabras = new Palabras([]);
+    $busca_palabras->setNueva($_POST['nueva']);
 }
 
 function palabrasPuntos(array $palabras, array $puntos_extra, int $ronda): array
