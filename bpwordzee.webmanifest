@@ -1,0 +1,35 @@
+{
+    "background_color": "white",
+    "description": "Buscador de palabras para el juego Wordzee!",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "front/icons/wordzee-32_32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "front/icons/wordzee-64_64.jpg",
+            "sizes": "64x64",
+            "type": "image/jpeg"
+        },
+        {
+            "src": "front/icons/wordzee-256_256.webp",
+            "sizes": "256x256",
+            "type": "image/webp"
+        },
+        {
+            "src": "front/icons/wordzee-512_512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "id": "wordzee",
+    "lang": "es-ES",
+    "name": "Busca Palabras para Wordzee!",
+    "orientation": "any",
+    "short_name": "BP Wordzee",
+    "start_url": "./index.html",
+    "theme_color": "white"
+}
