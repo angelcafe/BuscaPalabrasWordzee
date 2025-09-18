@@ -2,54 +2,115 @@
 spl_autoload_register(function ($nombre_clase) {
     require $nombre_clase . '.php';
 });
+
 if (!empty($_POST['ronda'])) {
+    $puntos_extra = obtenerPuntosExtra($_POST);
+    $letras_disponibles = obtenerLetrasDisponibles($_POST);
+    if ($letras_disponibles !== false) {
+        $ronda = intval($_POST['ronda']);
+        list($palabras, $encontradas) = obtenerPalabras($letras_disponibles);
+        $puntos_palabras = palabrasPuntos($palabras, $puntos_extra, $ronda);
+        $puntos_encontradas = array_intersect_key($puntos_palabras, array_flip($encontradas));
+        arsort($puntos_encontradas);
+        $palabras_puntos = [
+            'encontradas' => $puntos_encontradas,
+            'sugeridas'   => palabrasSugeridas($puntos_palabras)
+        ];
+        echo json_encode($palabras_puntos);
+    }
+}
+
+function coincidencia(string $palabra, array $letras): bool
+{
+    $palabra = mb_str_split($palabra);
+
+    foreach ($palabra as $letra) {
+        if (in_array($letra, $letras)) {
+            $index = array_search($letra, $letras);
+            unset($letras[$index]);
+        } else {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function obtenerLetrasDisponibles($post)
+{
+    $letras = [];
+    for ($i = 0; $i < 7; $i++) {
+        if (isset($post['letrasDisponibles'][$i]) && preg_match('/[A-JL-VX-ZÑa-jl-vx-zñ]/', $post['letrasDisponibles'][$i])) {
+            $letras[$i] = mb_strtoupper($post['letrasDisponibles'][$i]);
+        } else {
+            return false;
+        }
+    }
+    return $letras;
+}
+
+function obtenerPalabras(array $letras): array
+{
+    $bd = __DIR__ . DIRECTORY_SEPARATOR . 'palabras.sqlite';
+    $bd_palabras = new PDO('sqlite:' . $bd);
+    $bd_palabras->sqliteCreateFunction('regexp_like', 'preg_match', 2);
+    $query = $bd_palabras->query('SELECT palabra FROM palabras ORDER BY palabra ASC');
+
+    $palabras = [];
+    $encontradas = [];
+
+    while ($palabra = $query->fetch(PDO::FETCH_COLUMN, 0)) {
+        $palabras[] = $palabra;
+
+        if (coincidencia($palabra, $letras)) {
+            $encontradas[] = $palabra;
+        }
+    }
+
+    return [$palabras, $encontradas];
+}
+
+function obtenerPuntosExtra($post)
+{
     $pe_permitidos = ['DP', 'TP', 'DL', 'TL', ''];
     $puntos_extra = [];
     for ($x = 0; $x < 5; $x++) {
         for ($y = 0; $y < 3 + $x; $y++) {
             $tmp = 'pal' . ($x + 3) . 'let' . ($y + 1);
-            $puntos_extra[$x][$y] = (isset($_POST[$tmp]) && in_array($_POST[$tmp], $pe_permitidos)) ? ($_POST[$tmp]) : ('');
+            $puntos_extra[$x][$y] = (isset($post[$tmp]) && in_array($post[$tmp], $pe_permitidos)) ? ($post[$tmp]) : ('');
         }
     }
-    $letras_disponibles = [];
-    $post_existe = true;
-    for ($i = 0; $i < 7; $i++) {
-        if (isset($_POST['letrasDisponibles'][$i]) && preg_match('/[A-JL-VX-ZÑa-jl-vx-zñ]/', $_POST['letrasDisponibles'][$i])) {
-            $letras_disponibles[$i] = mb_strtoupper($_POST['letrasDisponibles'][$i]);
-        } else {
-            $letras_disponibles[$i] = '';
-            $post_existe = false;
-        }
-    }
-
-    if ($post_existe) {
-        $ronda = intval($_POST['ronda']);
-
-        $busca_palabras = new Palabras($letras_disponibles);
-        $resultado = $busca_palabras->getResultado();
-        $palabras = $busca_palabras->getPalabras();
-        $palabras_puntos['encontradas'] = palabrasPuntos($resultado, $puntos_extra, $ronda);
-        $palabras_puntos['sugeridas'] = palabrasPuntos($palabras, $puntos_extra, $ronda);
-        arsort($palabras_puntos['encontradas']);
-        arsort($palabras_puntos['sugeridas']);
-        $palabras_puntos['sugeridas'] = palabrasSugeridas($palabras_puntos['sugeridas']);
-
-        echo json_encode($palabras_puntos);
-    }
-} elseif (!empty($_POST['borrar'])) {
-    $busca_palabras = new Palabras([]);
-    $busca_palabras->setBorrar($_POST['borrar']);
-} elseif (!empty($_POST['nueva'])) {
-    $busca_palabras = new Palabras([]);
-    $busca_palabras->setNueva($_POST['nueva']);
+    return $puntos_extra;
 }
 
 function palabrasPuntos(array $palabras, array $puntos_extra, int $ronda): array
 {
     $aPuntos = [
-        'A' => 1, 'B' => 3, 'C' => 3, 'D' => 2, 'E' => 1, 'F' => 4, 'G' => 2, 'H' => 4,
-        'I' => 1, 'J' => 8, 'L' => 1, 'M' => 3, 'N' => 1, 'Ñ' => 8, 'O' => 1, 'P' => 3,
-        'Q' => 5, 'R' => 1, 'S' => 1, 'T' => 1, 'U' => 1, 'V' => 4, 'X' => 8, 'Y' => 4, 'Z' => 10
+        'A' => 1,
+        'B' => 3,
+        'C' => 3,
+        'D' => 2,
+        'E' => 1,
+        'F' => 4,
+        'G' => 2,
+        'H' => 4,
+        'I' => 1,
+        'J' => 8,
+        'L' => 1,
+        'M' => 3,
+        'N' => 1,
+        'Ñ' => 8,
+        'O' => 1,
+        'P' => 3,
+        'Q' => 5,
+        'R' => 1,
+        'S' => 1,
+        'T' => 1,
+        'U' => 1,
+        'V' => 4,
+        'X' => 8,
+        'Y' => 4,
+        'Z' => 10
     ];
     $pExtra = ['' => 1, 'DL' => 2, 'TL' => 3, 'DP' => 1, 'TP' => 1];
     $resultado = [];

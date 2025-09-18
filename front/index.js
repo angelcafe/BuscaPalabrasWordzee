@@ -1,29 +1,10 @@
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.documentElement.setAttribute('data-bs-theme', 'dark');
 }
-const activar_herramientas = Boolean(localStorage.getItem('ActivarHerramientas'));
-document.getElementById('idActivarHerramientas').checked = activar_herramientas;
-activarHerramientas();
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', cambiarTema);
-document.getElementById('idActivarHerramientas').addEventListener('change', activarHerramientas);
 document.querySelectorAll('input[readonly]').forEach(input => input.addEventListener('click', cambiarValorBotones));
 document.querySelectorAll('#letras input').forEach(input => input.addEventListener('input', cambiarFoco));
-
-document.getElementById('idGuardar').addEventListener('click', palabraGuardar);
-document.getElementById('idBorrar').addEventListener('click', palabraBorrar);
-
-function activarHerramientas() {
-    const idHerramientas = document.getElementById('idHerramientas');
-    const idActivarHerramientas = document.getElementById('idActivarHerramientas');
-    if (idActivarHerramientas.checked) {
-        localStorage.setItem('ActivarHerramientas', true);
-        idHerramientas.classList.remove('d-none');
-    } else {
-        localStorage.removeItem('ActivarHerramientas');
-        idHerramientas.classList.add('d-none');
-    }
-}
 
 function buscar() {
     if (!verificarCamposRellenos()) {
@@ -55,7 +36,7 @@ function buscar() {
                     if (palabra.length > 0) {
                         const inputs = document.querySelectorAll('#letras>input');
                         inputs.forEach(function (input, index) {
-                            input.value = palabra[index];
+                            input.value = palabra[index] || '';
                         });
                         const emptyInput = document.querySelector('#letras>input[value=""]');
                         if (emptyInput) {
@@ -101,21 +82,6 @@ function cambiarValorBotones(ev) {
     target.classList.add(clases[currentValue]);
 }
 
-function enviarPeticion(accion, palabra) {
-    const cargando = document.getElementById('cargando');
-    cargando.classList.remove('d-none');
-    fetch('./back/buscar.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `${accion}=${palabra}`
-    })
-        .then(() => {
-            cargando.classList.add('d-none');
-        })
-}
-
 function mostrarPalabrasEncontradas(id, clase, datos) {
     const tabla = [[], [], [], [], []];
     for (const [palabra, puntos] of Object.entries(datos)) {
@@ -128,16 +94,6 @@ function mostrarPalabrasEncontradas(id, clase, datos) {
     });
     const element = document.getElementById(id);
     element.innerHTML = filas.join('');
-}
-
-function palabraBorrar() {
-    const palabra = document.getElementById('palabraBorrar').value;
-    enviarPeticion('borrar', palabra);
-}
-
-function palabraGuardar() {
-    const palabra = document.getElementById('palabraGuardar').value;
-    enviarPeticion('nueva', palabra);
 }
 
 function restablecer() {
