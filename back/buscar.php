@@ -1,8 +1,4 @@
 <?php
-spl_autoload_register(function ($nombre_clase) {
-    require $nombre_clase . '.php';
-});
-
 if (!empty($_POST['ronda'])) {
     $puntos_extra = obtenerPuntosExtra($_POST);
     $letras_disponibles = obtenerLetrasDisponibles($_POST);
